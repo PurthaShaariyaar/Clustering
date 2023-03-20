@@ -36,6 +36,11 @@
       <artifactId>ajt</artifactId>
       <version>2.9</version>
     </dependency>
+    <dependency>
+      <groupId>nz.ac.waikato.cms.weka</groupId>
+      <artifactId>weka-dev</artifactId>
+      <version>3.9.5</version>
+    </dependency>
   </dependencies>
 
   <repositories>
@@ -78,7 +83,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>com.ontariotechu.sofe3980U.App</mainClass>
+                <mainClass>com.sofe3980U.App</mainClass>
               </manifest>
             </archive>
           </configuration> 
@@ -99,6 +104,21 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+        <!-- assembly lifecycle, generate jar with dependencies-->
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+              <mainClass>com.sofe3980U.App</mainClass>
+              </manifest>
+            </archive>
+          <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
