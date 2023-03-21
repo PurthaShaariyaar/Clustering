@@ -60,6 +60,53 @@ public class AppTest {
             e.printStackTrace();
         }
     }
-    
 
+    @Test
+    public void testKMeans() throws Exception {
+        Dataset data = FileHandler.loadDataset(new File("iris.data"), 4, ",");
+        
+        Clusterer kmeans = new net.sf.javaml.clustering.KMeans(3);
+        Dataset[] kmeansClusters = kmeans.cluster(data);
+        double aic = new AICScore().score(kmeansClusters);
+        double bic = new BICScore().score(kmeansClusters);
+        double sse = new SumOfSquaredErrors().score(kmeansClusters);
+        System.out.println(aic);
+        System.out.println(bic);
+        System.out.println(sse);
+        assertTrue(aic > 0);
+        assertTrue(bic > 0);
+        assertTrue(sse < 1000);
+    }
+    
+    @Test
+    public void testFarthestFirst() throws Exception {
+        Dataset data = FileHandler.loadDataset(new File("iris.data"), 4, ",");
+        Clusterer farthestFirst = new net.sf.javaml.clustering.FarthestFirst();
+        Dataset[] farthestFirstClusters = farthestFirst.cluster(data);
+        double aic = new AICScore().score(farthestFirstClusters);
+        double bic = new BICScore().score(farthestFirstClusters);
+        double sse = new SumOfSquaredErrors().score(farthestFirstClusters);
+        System.out.println(aic);
+        System.out.println(bic);
+        System.out.println(sse);
+        assertTrue(aic > 0);
+        assertTrue(bic > 0);
+        assertTrue(sse < 1000);
+    }
+    
+    @Test
+    public void testDensityBased() throws Exception {
+        Dataset data = FileHandler.loadDataset(new File("iris.data"), 4, ",");
+        Clusterer densityBased = new DensityBasedSpatialClustering(0.1, 5);
+        Dataset[] densityBasedClusters = densityBased.cluster(data);
+        double aic = new AICScore().score(densityBasedClusters);
+        double bic = new BICScore().score(densityBasedClusters);
+        double sse = new SumOfSquaredErrors().score(densityBasedClusters);
+        System.out.println(aic);
+        System.out.println(bic);
+        System.out.println(sse);
+        assertTrue(aic > 0);
+        assertTrue(bic > 0);
+        assertTrue(sse < 1000);
+    }
 }
